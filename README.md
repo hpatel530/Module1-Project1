@@ -14,6 +14,30 @@ Please fill out:
 # Your code here - remember to use markdown cells for comments as well!
 ```
 
+## **Introduction**
+Microsoft has decided to create a new movie studio and they are looking for a team to help them better understand the movie industry. The team will be in charged with doing data analysis and creating a presentation that explores what type of films are currently doing the best at the box office.
+
+The database that was chosen was the IMDB's Top 250 Films. The ratings are calculated by using a combination of fans and critics. The decision was based on using a database that only consisted of highly rated films and not a database that consist of every film in the market, which could produce outliers and misleading numbers. 
+
+I took on 'what the fans love' approach and did not pay much attention to the box office numbers.
+
+For example look at the data for the following movies; 
+
+Alice in Wonderland (2010) IMDB Rating: 6.4/10 World-wide Gross: 1  Billion 
+
+Transformers: Age of Extinction (2014) IMDB Rating: 5.6/10 
+World-wide Gross: 1.1 Billion
+
+The Godfather (1972) IMDB Rating: 9.2/10 
+World-wide Gross: 246 Million
+
+The Shawshank Redemption (1994)	IMDB Rating: 9.3/10	
+World-wide Gross: Less than 29 million
+
+Movies that made a splash at the box office had low user/fan ratings. On the contrary, movies with high ratings didn't do so well at the box-office. Actually, they stunk.
+
+Why is that? Better marketing? More movie-watchers this generation? How would a film like The Godfather or The Shawshank Redemption do in this generation? We may never know. But, what we do know, is the fans love these types of films and I will present to you why. 
+
 ## WEB Scraping IMDB TOP 250 
 
 **Using the get() method to retrieve a website**
@@ -61,13 +85,15 @@ print (final_title)
     ['The Shawshank Redemption', 'The Godfather', 'The Dark Knight', 'The Godfather: Part II', 'The Lord of the Rings: The Return of the King', 'Pulp Fiction', "Schindler's List", '12 Angry Men', 'Hamilton', 'Inception', 'Fight Club', 'The Lord of the Rings: The Fellowship of the Ring', 'Forrest Gump', 'The Good, the Bad and the Ugly', 'The Lord of the Rings: The Two Towers', 'The Matrix', 'Goodfellas', 'Star Wars: Episode V - The Empire Strikes Back', "One Flew Over the Cuckoo's Nest", 'Harakiri', 'Parasite', 'Interstellar', 'City of God', 'Spirited Away', 'Saving Private Ryan', 'The Green Mile', 'Life Is Beautiful', 'Se7en', 'The Silence of the Lambs', 'Star Wars: Episode IV - A New Hope', 'Seven Samurai', "It's a Wonderful Life", 'Joker', 'Whiplash', 'The Intouchables', 'The Prestige', 'The Departed', 'The Pianist', 'Gladiator', 'American History X', 'The Usual Suspects', 'Léon: The Professional', 'The Lion King', 'Terminator 2: Judgment Day', 'Cinema Paradiso', 'Grave of the Fireflies', 'Back to the Future', 'Anand', 'Once Upon a Time in the West', 'Psycho']
 
 
-**Retrieving Movie Title Function**
+**Retrieve Movie Title Function**
 
 
 ```python
 def retrieve_movietitle(soup):
+    """Retrieving movie titles from soup"""
     title_content = soup.find('div', class_='lister-list')
     list_of_h3= title_content.find_all('h3')
+    
     final_title = []
     for h3 in list_of_h3: 
         text = h3.text.replace('\n', '').split('.')[1]
@@ -79,6 +105,7 @@ def retrieve_movietitle(soup):
 
 
 ```python
+#testing the function 
 retrieve_movietitle(soup)
 ```
 
@@ -145,6 +172,7 @@ retrieve_movietitle(soup)
 title_content = soup.find('div', class_='lister-list')
 list_of_h3= title_content.find_all('h3')
 #list_of_h3[0].text.replace('\n', '')[-5:-1]
+
 release_year = []
 for h3 in list_of_h3:
     text = h3.text[-6:-2]
@@ -160,8 +188,10 @@ print(release_year)
 
 ```python
 def retrieve_year(soup): 
+    """Retrieving the release year of the movie from soup"""
     title_content = soup.find('div', class_='lister-list')
     list_of_h3= title_content.find_all('h3')
+    
     release_year = []
     for h3 in list_of_h3:
         text = h3.text[-6:-2]
@@ -171,6 +201,7 @@ def retrieve_year(soup):
 
 
 ```python
+#testing the function 
 retrieve_year(soup)
 ```
 
@@ -237,6 +268,7 @@ retrieve_year(soup)
 title_content = soup.find('div', class_='lister-list')
 genre = title_content.find_all('span', class_= 'genre')
 #genre[0].text.strip()
+
 final_genre = []
 for g in genre:
     words = g.text.strip()
@@ -253,6 +285,7 @@ print(len(final_genre), final_genre)
 
 ```python
 def retrieve_genre(soup):
+    """Retrieving the genre of the movie from soup"""
     title_content = soup.find('div', class_='lister-list')
     genre = title_content.find_all('span', class_= 'genre')
 
@@ -265,6 +298,7 @@ def retrieve_genre(soup):
 
 
 ```python
+#testing the function 
 retrieve_genre(soup)
 ```
 
@@ -348,8 +382,10 @@ print (len(certification), certification)
 
 ```python
 def retrieve_cert(soup):
+    """Retrieving the certification of the movie from soup"""
     title_content = soup.find('div', class_='lister-list')
     rating = title_content.find_all('span', class_= 'certificate')
+    
     certification = []
     for p in rating:
         new_rating = p.text
@@ -360,6 +396,7 @@ def retrieve_cert(soup):
 
 
 ```python
+#testing the function 
 retrieve_cert(soup)
 ```
 
@@ -443,6 +480,7 @@ print (len(imdb_rating), imdb_rating)
 
 ```python
 def retrieve_imdb(soup):
+    """Retrieving the movie imdb rating from soup"""
     title_content = soup.find('div', class_='lister-list')
     imdb = title_content.find_all('div', class_='inline-block ratings-imdb-rating')
     
@@ -455,6 +493,7 @@ def retrieve_imdb(soup):
 
 
 ```python
+#testing the function 
 retrieve_imdb(soup)
 ```
 
@@ -521,6 +560,7 @@ retrieve_imdb(soup)
 title_content = soup.find('div', class_='lister-list')
 director = title_content.find_all('p', class_="")
 #director[0].find('a').text
+
 final_directors = []
 for person in director:
     final = person.find('a').text
@@ -536,6 +576,7 @@ print(final_directors)
 
 ```python
 def retrieve_director(soup):
+    '''Retrieving movie director from soup'''
     title_content = soup.find('div', class_='lister-list')
     director = title_content.find_all('p', class_="")
 
@@ -548,6 +589,7 @@ def retrieve_director(soup):
 
 
 ```python
+#testing the function 
 retrieve_director(soup)
 ```
 
@@ -622,14 +664,16 @@ for money in gross:
 print(final_gross)
 ```
 
-    ['$28.34M', '$134.97M', '$534.86M', '$57.30M', '$377.85M', '$107.93M', '$96.90M', '$4.36M', '31,248', '$292.58M', '$37.03M', '$315.54M', '$330.25M', '$6.10M', '$342.55M', '$171.48M', '$46.84M', '$290.48M', '$112.00M', '36,463', '$53.37M', '$188.02M', '$7.56M', '$10.06M', '$216.54M', '$136.80M', '$57.60M', '$100.13M', '$130.74M', '$322.74M', '$0.27M', '386,826', '$335.45M', '$13.09M', '$13.18M', '$53.09M', '$132.38M', '$32.57M', '$187.71M', '$6.72M', '$23.34M', '$19.50M', '$422.78M', '$204.84M', '$11.99M', '223,648', '$210.61M', '27,621', '$5.32M', '$32.00M']
+    ['$28.34M', '$134.97M', '$534.86M', '$57.30M', '$377.85M', '$107.93M', '$96.90M', '$4.36M', '32,728', '$292.58M', '$37.03M', '$315.54M', '$330.25M', '$6.10M', '$342.55M', '$171.48M', '$46.84M', '$290.48M', '$112.00M', '36,628', '$53.37M', '$188.02M', '$7.56M', '$10.06M', '$216.54M', '$136.80M', '$57.60M', '$100.13M', '$130.74M', '$322.74M', '$0.27M', '387,088', '$335.45M', '$13.09M', '$13.18M', '$53.09M', '$132.38M', '$32.57M', '$187.71M', '$6.72M', '$23.34M', '$19.50M', '$422.78M', '$204.84M', '$11.99M', '223,985', '$210.61M', '27,723', '$5.32M', '$32.00M']
 
 
 **Retrieve Domestic Gross Function**
 
 
 ```python
+
 def retrieve_domestic(soup):
+    """Retriving domestic gross from soup"""
     title_content = soup.find('div', class_='lister-list')
     gross = title_content.find_all('p', class_='sort-num_votes-visible')
 
@@ -643,62 +687,63 @@ def retrieve_domestic(soup):
 
 
 ```python
+#testing the function 
 retrieve_domestic(soup)
 ```
 
 
 
 
-    ['$380.84M',
-     '$164.62M',
-     '$5.38M',
-     '$0.07M',
-     '$293.51M',
-     '$125.62M',
-     '$17.50M',
-     '$2.73M',
-     '$16.50M',
-     '$24.61M',
-     '$0.31M',
-     '$5.54M',
-     '$402.45M',
-     '$25.01M',
-     '$95.86M',
-     '$30.86M',
-     '$52.29M',
-     '$138.53M',
-     '$2.18M',
-     '$0.50M',
-     '$13.78M',
-     '$32.87M',
-     '213,697',
-     '$20.05M',
-     '$48.98M',
-     '$117.24M',
-     '141,327',
-     '144,564',
-     '$16.22M',
-     '98,207',
-     '$0.10M',
-     '$0.06M',
-     '101,368',
-     '$74.70M',
-     '44,492',
-     '$44.91M',
-     '$9.60M',
-     '52,686',
-     '$0.45M',
+    ['$28.34M',
+     '$134.97M',
+     '$534.86M',
+     '$57.30M',
+     '$377.85M',
+     '$107.93M',
+     '$96.90M',
      '$4.36M',
-     '$9.60M',
-     '$198.68M',
-     '$4.36M',
-     '$0.02M',
-     '26,773',
-     '$1.03M',
-     '$169.71M',
-     '$5.82M',
-     '$289.92M',
-     '$38.40M']
+     '32,728',
+     '$292.58M',
+     '$37.03M',
+     '$315.54M',
+     '$330.25M',
+     '$6.10M',
+     '$342.55M',
+     '$171.48M',
+     '$46.84M',
+     '$290.48M',
+     '$112.00M',
+     '36,628',
+     '$53.37M',
+     '$188.02M',
+     '$7.56M',
+     '$10.06M',
+     '$216.54M',
+     '$136.80M',
+     '$57.60M',
+     '$100.13M',
+     '$130.74M',
+     '$322.74M',
+     '$0.27M',
+     '387,088',
+     '$335.45M',
+     '$13.09M',
+     '$13.18M',
+     '$53.09M',
+     '$132.38M',
+     '$32.57M',
+     '$187.71M',
+     '$6.72M',
+     '$23.34M',
+     '$19.50M',
+     '$422.78M',
+     '$204.84M',
+     '$11.99M',
+     '223,985',
+     '$210.61M',
+     '27,723',
+     '$5.32M',
+     '$32.00M']
 
 
 
@@ -706,6 +751,7 @@ retrieve_domestic(soup)
 
 
 ```python
+#importing the neccessary packages to complete the process
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -713,6 +759,7 @@ from bs4 import BeautifulSoup
 
 
 ```python
+#created a list for each category and created a for loop to iterate through and retrieve the information from the web
 movie_titles = []
 year_released = []
 genres = []
@@ -921,6 +968,7 @@ df.tail()
 
 
 ```python
+#checking data types 
 df.dtypes
 ```
 
@@ -950,29 +998,34 @@ x= average imdb ratings y = directors
 
 
 ```python
+#importing ploting package and 'inline' to preview graph within our code
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+#converted IMDB_Rating type to a float, originally an object 
 df['IMDB_Rating'] = df['IMDB_Rating'].astype('float')
+
+#created a variable, set index to director and sorted values
 top_35 = df.set_index('Director').sort_values("IMDB_Rating", ascending=True).tail(35)
 
-plt.figure(figsize=(16,12))
+plt.figure(figsize=(10,10))
 chart = top_35['IMDB_Rating'].plot(kind='barh', colormap ='autumn')
-font_dict = {'family': 'serif', 'size':24}
+font_dict = {'family': 'serif', 'size':20}
 plt.xlabel('IMDB Rating', fontdict=font_dict)
 plt.ylabel('Directors', fontdict=font_dict)
 plt.tick_params(axis='both', labelsize=12)
 plt.title('Directors with Highest IMDB Rating', fontdict=font_dict)
 plt.xlim(7.5,9.5)
+plt.show()
 ```
 
 
+![png](output_49_0.png)
 
 
-    (7.5, 9.5)
+**Proposal**
 
-
-
-
-![png](output_48_1.png)
-
+Hire either Frank Darabont, Christopher Nolan, Steven Spielberg or Francis Ford Coppola as your director!
 
 **1. Quantity of each type of certification**
 
@@ -988,6 +1041,10 @@ import seaborn as sns
 rating_count = df.groupby('Movie_Rating').count()
 rating_count
 ```
+
+    /Users/Hiten.K.Patel/opt/anaconda3/envs/learn-env/lib/python3.6/site-packages/statsmodels/tools/_testing.py:19: FutureWarning: pandas.util.testing is deprecated. Use the functions in the public API at pandas.testing instead.
+      import pandas.util.testing as tm
+
 
 
 
@@ -1120,6 +1177,7 @@ rating_count
 in_order = ['R', 'PG', 'Not Rated', 'PG-13', 'Passed', 'G', 'Approved', 'GP', 'TV-MA']
 plt.figure(figsize=(10, 10))
 sns.countplot(x='Movie_Rating', order= in_order, data=df)
+
 font_dict = {'family': 'serif', 'size':24}
 plt.xlabel('Movie Certifications', fontdict=font_dict)
 plt.ylabel('Quantity', fontdict=font_dict)
@@ -1128,7 +1186,7 @@ plt.tick_params(axis='both', labelsize=14)
 ```
 
 
-![png](output_51_0.png)
+![png](output_53_0.png)
 
 
 
@@ -1305,19 +1363,51 @@ plt.ylabel('IMDB_Rating', fontdict=font_dict)
 plt.title('IMDB_Rating per Movie Certification', fontdict=font_dict)
 plt.tick_params(axis='x', labelsize=14, rotation=45)
 plt.tick_params(axis='y', labelsize=14)
+
 sns.swarmplot(data=df, x = 'Movie_Rating', y= "IMDB_Rating", order = in_order)
 ```
 
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7f80769a45f8>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7f85f2528128>
 
 
 
 
-![png](output_53_1.png)
+![png](output_55_1.png)
 
+
+
+```python
+in_order = ['R', 'PG', 'Not Rated', 'PG-13', 'Passed', 'G', 'Approved', 'GP', 'TV-MA']
+plt.figure(figsize=(8, 6))
+
+font_dict = {'family': 'serif', 'size':16}
+plt.xlabel('Movie Certifications', fontdict=font_dict)
+plt.ylabel('IMDB_Rating', fontdict=font_dict)
+plt.title('IMDB_Rating per Movie Certification', fontdict=font_dict)
+plt.tick_params(axis='x', labelsize=14, rotation=45)
+plt.tick_params(axis='y', labelsize=14)
+
+sns.swarmplot(data=df, x = 'Movie_Rating', y= "IMDB_Rating", order = in_order)
+sns.boxplot(data=df, x = 'Movie_Rating', y= "IMDB_Rating", order = in_order, color="black")
+```
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x7f85f2316908>
+
+
+
+
+![png](output_56_1.png)
+
+
+**Proposal**
+
+The film needs to be classified as a Rated-R or a PG-13 Movie Certificate
 
 **Explode movies that have multiple genres**
 
@@ -1325,10 +1415,14 @@ sns.swarmplot(data=df, x = 'Movie_Rating', y= "IMDB_Rating", order = in_order)
 
 
 ```python
+#created a new column, List of Genres from Genres. Cleaned up Genres and explode
+
 df['List_of_Genres'] = df['Genres'].map(lambda x: x.strip().split(','))
 df = df.explode('List_of_Genres')
+
 df['List_of_Genres']=df['List_of_Genres'].map(lambda x: x.strip())
 display (df.head())
+
 genre_count = df.groupby("List_of_Genres")['Title'].count()
 display(genre_count)
 ```
@@ -1466,8 +1560,50 @@ plt.tick_params(axis='both', labelsize=14)
 ```
 
 
-![png](output_56_0.png)
+![png](output_60_0.png)
 
+
+
+```python
+i_order = ['Drama', 'Adventure', 'Crime', 'Action', 'Comedy', 'Thriller', 'Mystery', 'Biography', 'Romance', 'Sci-Fi', 'Animation', 'War', 'History', 'Family', 
+            'Fantasy', 'Sport', 'Western', 'Horror', 'Film-Noir', 'Music', 'Musical']
+plt.figure(figsize=(12, 16))
+
+font_dict = {'family': 'serif', 'size':16}
+plt.xlabel('List_of_Genres', fontdict=font_dict)
+plt.ylabel('IMDB_Rating', fontdict=font_dict)
+plt.title('IMDB_Rating per Genre', fontdict=font_dict)
+plt.tick_params(axis='x', labelsize=12)
+plt.tick_params(axis='y', labelsize=12)
+
+sns.swarmplot(data=df, y = 'List_of_Genres', x= "IMDB_Rating", order=i_order)
+sns.boxplot(data=df, y = 'List_of_Genres', x= "IMDB_Rating", order=i_order, color= "grey")
+```
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x7f85f15d3fd0>
+
+
+
+
+![png](output_61_1.png)
+
+
+**Proposal**
+
+According to the graphs and data, the film needs to fall into the Genre, "Drama". The film genre can be combined with Adventure, Crime, or Action. 
+
+**Conclusion**
+
+After digging deep into IMDB's Top 250 Movies database, we have concluded the folloiwng; 
+
+1. Hire the best director; Frank Darabont, Christopher Nolan, Steven Spielberg or Frank Ford Coppola. 
+
+2. The film needs to be classified as a Rated-R or a PG-13 film
+
+3. The film genre needs to fall under the "Drama" category and it can be combined with 'Adventure', 'Crime', or 'Action'. 
 
 
 ```python
